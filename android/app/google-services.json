@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1067218382988",
+    "project_id": "scannerolives",
+    "storage_bucket": "scannerolives.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067218382988:android:d0dc6ffffedc651047cba9",
+        "android_client_info": {
+          "package_name": "com.example.project_olivier"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWvppX6uoqGX5chMLxqTU6D3bndS59d_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
