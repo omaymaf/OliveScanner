@@ -10,6 +10,7 @@ import 'package:project_olivier/features/user_auth/presentation/widgets/form_con
 import 'package:project_olivier/global/common/toast.dart';
 
 import '../../firebase_auth_implementation/firebase_auth_services.dart';
+import 'forgot_pwd_page.dart';
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -63,7 +64,32 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: "Password",
                 isPasswordField: true,
               ),
-              SizedBox(height: 30,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal:25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap:(){
+                        Navigator.push(context,MaterialPageRoute(builder: (context){
+                          return ForgotPasswordPage();
+                        },
+                        ),
+                        );
+                      },
+                      child: Text("Forgot Password?",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
 
               GestureDetector(
                 onTap:_signIn,
