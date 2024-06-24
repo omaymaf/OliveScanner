@@ -6,7 +6,10 @@
     <application
         android:label="project_olivier"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true"
+        android:hardwareAccelerated="false"
+        >
         <activity
             android:name=".MainActivity"
             android:exported="true"

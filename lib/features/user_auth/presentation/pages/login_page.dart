@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -194,31 +195,55 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  _signInWithGoogle()async{
-
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
-
-    try {
-
-      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
-
-      if(googleSignInAccount != null ){
-        final GoogleSignInAuthentication googleSignInAuthentication = await
-        googleSignInAccount.authentication;
-
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken,
-        );
-
-        await _firebaseAuth.signInWithCredential(credential);
-        Navigator.pushNamed(context, "/home");
+  _signInWithGoogle() async {
+    if (kIsWeb) {
+      // Connexion avec pop-up pour le web
+      try {
+        UserCredential userCredential = await _firebaseAuth.signInWithPopup(GoogleAuthProvider());
+        if (userCredential.user != null) {
+          print("Firebase sign-in successful");
+          Navigator.pushNamed(context, "/home");
+        } else {
+          print("Couldn't sign in with Firebase");
+          showToast(message: "Couldn't sign in. Please try again.");
+        }
+      } catch (e) {
+        print("Error signing in with Google: $e");
+        showToast(message: "Couldn't sign in. Error: $e");
       }
+    } else {
+      // Connexion pour mobile
+      try {
+        final GoogleSignIn _googleSignIn = GoogleSignIn();
+        final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
 
-    }catch(e) {
-      showToast(message: "some error occured $e");
+        if (googleSignInAccount != null) {
+          final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+
+          final AuthCredential credential = GoogleAuthProvider.credential(
+            idToken: googleSignInAuthentication.idToken,
+            accessToken: googleSignInAuthentication.accessToken,
+          );
+
+          UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
+          if (userCredential.user != null) {
+            print("Firebase sign-in successful");
+            Navigator.pushNamed(context, "/home");
+          } else {
+            print("Couldn't sign in with Firebase");
+            showToast(message: "Couldn't sign in. Please try again.");
+          }
+        } else {
+          print("Google sign-in was canceled");
+          showToast(message: "Google sign-in was canceled.");
+        }
+      } catch (e) {
+        print("Error signing in with Google: $e");
+        showToast(message: "Couldn't sign in. Error: $e");
+      }
     }
   }
+
 
 
 

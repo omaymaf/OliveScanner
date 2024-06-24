@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
@@ -78,10 +79,12 @@ class _HomePageState extends State<HomePage> {
 
               SizedBox(height: 40,),
               GestureDetector(
-                onTap: (){
-                  FirebaseAuth.instance.signOut();
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  final GoogleSignIn _googleSignIn = GoogleSignIn();
+                  await _googleSignIn.signOut();
+                  showToast(message: "Successfully signed out");
                   Navigator.pushNamed(context, "/login");
-                  showToast(message: "Successfuly signed out");
                 },
                 child: Container(
                   height: 45,
