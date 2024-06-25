@@ -27,9 +27,6 @@ class _HomePageState extends State<HomePage> {
       // final imageTemporary = File(image.path);
       final imagePermanent = await saveFilePermanently(image.path);
 
-
-
-
       setState(() {
         this._image=imagePermanent;
       });
@@ -55,17 +52,13 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Olivier Scanner'),
       ),
-      body: Center(
-        // child: ElevatedButton(
-        //  onPressed: _openCamera,
-        //  child: Text('Scanner les Olives'),
-        // ),
+      body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
-              SizedBox(height: 40,),
+              SizedBox(height: 30,),
               _image != null ?  Image.file(_image!,width: 350,height: 350,fit: BoxFit.cover,): Image.asset("assets/images/Logo.jpg",width: 350,height: 350,),
-              SizedBox(height: 40,),
+              SizedBox(height: 30,),
               CustomButtom(
                 Title: 'Pick From Gallery',
                 icon: Icons.image_outlined,
@@ -77,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                 onClick: ()=> getImage(ImageSource.camera),
               ),
 
-              SizedBox(height: 40,),
+              SizedBox(height: 30,),
               GestureDetector(
                 onTap: () async {
                   await FirebaseAuth.instance.signOut();
